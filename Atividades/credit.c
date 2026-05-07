@@ -27,7 +27,7 @@ int main(void)
         }
         num = num/10;
     } 
-   int total = mult + rest;
+int total = mult + rest;
     if(total % 10 == 0)
     {
         printf("Valido!");
@@ -37,4 +37,7 @@ int main(void)
         printf("Invalido !");
     }
 }
- 
+if (i == 15 || i == 16)
+{
+    printf("Bandeira : Visa")
+}
