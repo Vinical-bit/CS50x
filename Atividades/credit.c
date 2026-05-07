@@ -15,10 +15,10 @@ int main(void)
         int digito = num%10;
         if(i % 2 == 0)
         {
-            mult = digito*2;
+            digito = digito*2;
             if(digito > 9)
             {
-                mult = 1 + (digito % 10);
+                mult += 1 + (digito % 10);
             }
         }
         else
@@ -27,7 +27,7 @@ int main(void)
         }
         num = num/10;
     } 
-    int total = mult + rest;
+   int total = mult + rest;
     if(total % 10 == 0)
     {
         printf("Valido!");
@@ -37,3 +37,4 @@ int main(void)
         printf("Invalido !");
     }
 }
+ 
