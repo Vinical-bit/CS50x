@@ -6,9 +6,11 @@ int main(void)
     int i;
     int mult = 0;
     int rest = 0;
+    long orig;
 
     printf("Number: ");
     scanf("%li", &num);
+    orig = num;
 
     while (num > 0)
     {i++;
@@ -20,6 +22,10 @@ int main(void)
             {
                 mult += 1 + (digito % 10);
             }
+            else
+            {
+                mult += digito;
+            }
         }
         else
         {
@@ -27,17 +33,41 @@ int main(void)
         }
         num = num/10;
     } 
-int total = mult + rest;
-    if(total % 10 == 0)
+    int total = mult + rest;
+    while (orig >= 100)
     {
-        printf("Valido!");
+        orig /= 10;
     }
+
+    if (total % 10 == 0)
+    {
+
+        if (i == 15 && (orig == 34 || orig == 37))
+            {
+                printf("AMEX\n");
+            }
+
+        else if (i == 16 && (orig >= 51) && (orig <= 55))
+            {
+                printf("MASTERCARD\n");
+            }
+
+        else if ((i == 13 || i == 16) && (orig / 10 == 4))
+            {
+                printf("VISA\n");
+            }
+
+        else
+            {
+                printf("INVALID\n");
+            }
+    }
+
     else
     {
-        printf("Invalido !");
+        printf("INVALID\n");
     }
+
+
 }
-if (i == 15 || i == 16)
-{
-    printf("Bandeira : Visa")
-}
+
