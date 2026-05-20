@@ -32,7 +32,7 @@ int main(void)
     float index = 0.0588 * L - 0.296 * S - 15.8;
 
     // indicar o grau dele
-    int grade = round(index);
+    int grade = round(index); // é para arredondar
 
     if (grade >= 1 && grade <= 15)
     {
