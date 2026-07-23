@@ -5,7 +5,7 @@ def check(word):
 
 def load(dictionary):
     with open(dictionary) as file:
-        words.update(file.read().splitlines)
+        words.update(file.read().splitlines) # splitlines() divide o arquivo em linhas e adiciona cada linha ao conjunto words
     return True
 
 def size():
