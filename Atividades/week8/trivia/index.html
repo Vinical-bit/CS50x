@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script src="script.js" defer>
+            // TODO: Add code to check answers to questions
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <!-- TODO: Add multiple choice question here -->
+                <h3>According to an old popular legend, which of these animals 
+                    'shouldn't' be able to fly according to classical aerodynamics — 
+                    despite clearly flying?</h3>
+               <div class="choice">
+                   <button class="wr">Hummingbird</button>
+                   <button id="bee" onclick="correctAnswer()">Bee</button>
+                   <button class="wr">Eagle</button>
+                   <button class="wr">Bat</button>
+               </div>
+               <p id="feedback1"></p>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- TODO: Add free response question here -->
+                 <h3>Which animal has the largest heart on the planet (in absolute size)?</h3>
+                 <div>
+                    <input type="text" id="answer" name="answer" placeholder="Type your answer here">
+                    <button id="submit" onclick="checkAnswer()">Check Answer</button>
+                 </div>
+                 <p id="feedback2"></p>
+            </div>
+        </div>
+    </body>
+</html>

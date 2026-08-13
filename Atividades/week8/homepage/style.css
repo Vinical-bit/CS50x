@@ -1,0 +1,204 @@
+:root{
+    --fundo-principal: #06141B;
+    --fundo-card: #11212D;
+    --fundo-elevado: #253745;
+    --texto: #CCD0CF;
+    --texto-apoio: #9BA8AB;
+    --destaque: #0F52BA;
+    --destaque-texto: #7B99FF;
+
+    --fonte-corpo: 'Inter', Verdana, Geneva, Tahoma, sans-serif;
+    --fonte-titulo: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+body{
+    font-family: var(--fonte-corpo);
+    line-height: 1.5em;
+    background-color: var(--fundo-principal);
+    color: var(--texto);
+}
+
+.container-fluid{
+    flex: 1;
+}
+
+body{
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before{
+    content: "";
+    position: fixed;
+    top: -20%;
+    right: -15%;
+    width: 70vw;
+    height: 70vw;
+    max-width: 900px;
+    max-height: 900px;
+    background: radial-gradient(circle, var(--destaque) 0%, transparent 65%);
+    opacity: 0.55;
+    filter: blur(60px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::after{
+    content: "";
+    position: fixed;
+    bottom: -20%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    max-width: 600px;
+    max-height: 600px;
+    background: radial-gradient(circle, var(--destaque-texto) 0%, transparent 65%);
+    opacity: 0.25;
+    filter: blur(60px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+h1, h2, .eyebrow{
+    font-family: var(--fonte-titulo);
+}
+
+.eyebrow{
+    color: var(--destaque-texto);
+}
+
+.avatar{
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 2px solid var(--destaque-texto);
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1rem;
+}
+
+aside{
+    text-align: center;
+    padding: 2rem 1.5rem;
+}
+
+.nickname{
+    color: var(--destaque-texto);
+    font-family: var(--fonte-titulo);
+    margin-bottom: 1rem;
+}
+
+.bio{
+    color: var(--texto-apoio);
+    font-size: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bio.expanded{
+    -webkit-line-clamp: unset;
+    display: block;
+}
+
+.bio-toggle{
+    background: none;
+    border: none;
+    color: var(--destaque-texto);
+    font-family: var(--fonte-titulo);
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+
+.bio-toggle:hover{
+    text-decoration: underline;
+}
+
+.social-links{
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-links a{
+    color: var(--destaque-texto);
+    text-decoration: none;
+    border: 1px solid var(--destaque);
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    transition: color 0.4s ease, transform 0.6s ease;
+}
+
+.social-links a:hover{
+    color: var(--destaque-inverso);
+    transform: translate(-3px,-3px);
+}
+
+main{
+    padding: 2rem 1.5rem;
+}
+
+.page-links{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.page-card{
+    position: relative;
+    overflow: hidden; /* corta a barra nos cantos arredondados do card */
+    background-color: rgba(17, 33, 45, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    color: var(--texto);
+    transition: background-color 0.2s ease;
+    /* REMOVA a linha border-left que estava aqui */
+}
+
+.page-card::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--destaque);
+    transition: width 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.page-card:hover{
+    background-color: var(--fundo-elevado);
+    text-decoration: none;
+}
+
+.page-card:hover::before{
+    width: 6px;
+    background-color: var(--destaque-texto);
+    box-shadow: 0 0 12px 2px var(--destaque-texto);
+}
+
+.page-card h2{
+    color: var(--texto);
+    font-size: 1.1rem;
+    margin: 0.25rem 0 0.5rem;
+}
+
+.page-card p{
+    color: var(--texto-apoio);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+footer{
+    text-align: center;
+    padding: 15px;
+}
