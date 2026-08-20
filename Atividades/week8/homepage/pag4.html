@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos Futuros | Vinical</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <link href="estilos/pag4.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/2a46f1b367.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <main>
+        <a href="index.html" class="back-link">&larr; Voltar</a>
+
+        <h1>Planos Futuros</h1>
+
+        <p class="page-intro">
+            O plano pra este ano é simples: construir uma base sólida antes de dar o
+            próximo passo. O objetivo final é entrar na faculdade de Engenharia de
+            Software, mas chegando lá já com bagagem prática, não do zero. Ainda tenho
+            curiosidade por Cibersegurança também — é uma área que quero explorar melhor
+            antes de decidir de vez qual caminho seguir com mais profundidade.
+        </p>
+
+        <h2 class="tags-heading">Próximos passos</h2>
+        <ol class="roadmap">
+            <li>Terminar o CS50 de Harvard</li>
+            <li>Concluir o curso de desenvolvimento full stack</li>
+            <li>Tirar certificações relevantes</li>
+            <li>Começar a pegar freelancers pra testar na prática</li>
+            <li>Entrar na faculdade de Engenharia de Software</li>
+        </ol>
+
+        <p class="page-intro">
+            A ideia por trás desse ano "de preparação" é simples: quando eu entrar na
+            faculdade, já quero estar um passo à frente, com experiência real de
+            projetos, não só teoria.
+        </p>
+
+        <div class="card">
+            <h2 class="card">Tenho uma pergunta para você</h2>
+        
+        <p class="card">Digite o que você planeja para o futuro.</p>
+
+        <div class="input-group">
+            <label for="textoInput">Sua mensagem:</label>
+            <!-- Campo que aciona a funcao JS sempre que o usuario digita -->
+            <input type="text" id="textoInput" placeholder="Digite uma mensagem" oninput="getWord()">
+        </div>
+
+        <!-- Area atualizada dinamicamente com o texto informado -->
+        <div id="textoPreview">
+            Seu texto aparece aqui.
+        </div>
+
+        <!-- Contador de caracteres alterado via DOM -->
+        <span id="charCount">Caracteres: 0</span>
+        </div>
+        
+    </main>
+    <footer>
+        <p>&copy; 2026 My Website</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

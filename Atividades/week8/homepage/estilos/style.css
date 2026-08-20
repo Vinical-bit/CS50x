@@ -134,7 +134,7 @@ aside{
 }
 
 .social-links a:hover{
-    color: var(--destaque-inverso);
+    color: var(--destaque-texto);
     transform: translate(-3px,-3px);
 }
 
@@ -161,7 +161,6 @@ main{
     text-decoration: none;
     color: var(--texto);
     transition: background-color 0.2s ease;
-    /* REMOVA a linha border-left que estava aqui */
 }
 
 .page-card::before{
