@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    index
+{% endblock %}
+
+{% block main %}
+<table>
+    <tr>
+        <th>Symbol</th>
+        <th>Price</th>
+        <th>Value</th>
+        <th>Shares</th>
+    </tr>
+    {% for row in rows %}
+    <tr>
+        <td>{{ row.symbol }}</td>
+        <td>{{ row.price | usd }}</td>
+        <td>{{ row.total_value| usd }}</td>
+        <td>{{ row.total_share }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<table>
+    <tr>
+        <th>Cash</th>
+        <th>Total</th>
+    </tr>
+    <tr>
+        <th>{{ cash | usd}}</th>
+        <th>{{ grand_total | usd }}</th>
+    </tr>
+</table>
+
+{% endblock %}

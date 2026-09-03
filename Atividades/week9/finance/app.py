@@ -36,8 +36,22 @@ def after_request(response):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+    # pegar o total de shares do user logado
+    rows = db.execute("SELECT symbol, sum(CASE WHEN type='buy' THEN shares ELSE -shares END) AS total_share FROM transactions WHERE user_id = ? GROUP BY symbol HAVING total_share > 0", session["user_id"]) # o having total_share > 0 é para pegar apenas as ações que o user tem, ou seja, que não foram vendidas
 
+    # calcular o preço atual e o valor total de cada ação
+    for row in rows:
+        var = lookup(row["symbol"])
+        row["price"] = var["price"]
+        row["total_value"] = row["total_share"] * row["price"]
+
+    # pegar o cash do user
+    user_row = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"]) # aqui pega o id do user logado
+    cash = user_row[0]["cash"] # pega o cash do user logado
+    # calcular o total geral
+    grand_total = sum(row["total_value"] for row in rows) + cash
+
+    return render_template("index.html", rows=rows, cash=cash, grand_total=grand_total)
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
@@ -46,23 +60,23 @@ def buy():
     if request.method == "POST":
         """ pegar o symbol e quantidade do form"""
         symbol = request.form.get("symbol")
-        quantity = request.form.get("quantity")
+        shares = request.form.get("shares")
 
         # verificar se é valido
-        if not symbol or not quantity:
-            return apology("must provide symbol and quantity", 403)
+        if not symbol or not shares:
+            return apology("must provide symbol and quantity")
         try:
-            shares = int(quantity) 
+            shares = int(shares) 
         except ValueError:
-            return apology("must provide quantity", 403)
+            return apology("must provide quantity")
 
         if shares <= 0:
-            return apology("must provide one integer number", 403)
+            return apology("must provide one integer number")
         
         # consultar preço com lookup
         result = lookup(symbol)
         if result is None:
-            return apology("not found",403)
+            return apology("not found")
         
         price = result["price"]
 
@@ -87,7 +101,8 @@ def buy():
 @login_required
 def history():
     """Show history of transactions"""
-    return apology("TODO")
+    rows = db.execute("SELECT * FROM transactions WHERE user_id = ? ORDER BY transacted_at DESC", session["user_id"])
+    return render_template("history.html", rows=rows)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -147,11 +162,11 @@ def quote():
     if request.method == "POST":
         symbol = request.form.get("symbol")
         if not symbol:
-            return apology("must provide symbol", 403)
+            return apology("must provide symbol")
 
         result = lookup(symbol)
         if result is None:
-            return apology("not found",403)
+            return apology("not found")
         return render_template("quote.html", symbol= result["symbol"], name= result["name"], price=result["price"])
         
     else:    
@@ -163,25 +178,25 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         if not username:
-            return apology("must provide username", 403)
+            return apology("must provide username")
 
         password = request.form.get("password")
         if not password:
-            return apology("must provide password", 403)
+            return apology("must provide password")
         
         confirmation = request.form.get("confirmation")
         if not confirmation:
-            return apology("must provide confirmation", 403)
+            return apology("must provide confirmation")
         
         if(password != confirmation):
-            return apology("different password", 403)
+            return apology("different password")
         
         hashpin = generate_password_hash(password)
         
         try:
             db.execute("INSERT INTO users (username,hash) VALUES(?,?)", username, hashpin)
         except ValueError:
-            return apology("Same username", 403)
+            return apology("Same username")
 
         return redirect("/login")
     else:
@@ -193,4 +208,40 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+        symbol = request.form.get("symbol")
+        shares = request.form.get("shares")
+
+        if not symbol or not shares:
+            return apology("must provide symbol and shares",)
+        
+        try:
+            shares = int(shares)
+        except ValueError:
+            return apology("must provide quantity",)
+
+        if shares <= 0:
+            return apology("must provide one integer number",)
+        
+        # consultar preço com lookup
+        result = lookup(symbol)
+        if result is None:
+            return apology("not found")
+        
+        rows = db.execute("SELECT symbol, sum(CASE WHEN type='buy' THEN shares ELSE -shares END) AS total_share FROM transactions WHERE user_id = ? AND symbol = ? GROUP BY symbol HAVING total_share > 0", session["user_id"], symbol)
+        # verificar se o user tem ações suficientes para vender/ o length do rows é 1 se o user tiver ações, se não tiver será 0, e se tiver menos ações do que quer vender, o total_share será menor do que shares    
+        if len(rows) != 1 or rows[0]["total_share"] < shares:
+            return apology("not enough shares")
+        
+        price = result["price"]
+        # pegar o cash do user
+        rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"]) # aqui pega o id do user logado
+        cash = rows[0]["cash"] # pega o cash do user logado
+        # atualizar tabela de users e transactions
+        db.execute("UPDATE users SET cash = ? WHERE id = ?", cash + price * shares, session["user_id"])
+        # registrar a transação na tabela transactions
+        db.execute("INSERT INTO transactions (user_id, symbol, shares, price, transacted_at, type) VALUES(?, ?, ?, ?, ?, ?)", session["user_id"], symbol, shares, price, datetime.now(), "sell")
+        return redirect("/")
+    else:
+        # pegar o total de shares do user logado
+        return render_template("sell.html", rows=db.execute("SELECT symbol, sum(CASE WHEN type='buy' THEN shares ELSE -shares END) AS total_share FROM transactions WHERE user_id = ? GROUP BY symbol HAVING total_share > 0", session["user_id"]))
